@@ -81,7 +81,7 @@ public class GameScreen extends InputAdapter implements Screen {
   public GameScreen(CrazyPuttingGame game, int level) {
     this.score = 0;
     this.game = game;
-    this.powerBar = new Texture("core/assets/pwerBar.9.png");
+    this.powerBar = new Texture("core/assets/Crazy Putting/pwerBar.9.png");
     this.rollingBall = new Ball();
     this.level = level;
     this.tree = new ArrayList<ModelInstance>();
@@ -232,7 +232,7 @@ public class GameScreen extends InputAdapter implements Screen {
 
     this.stage = new Stage();
     this.table = new Table();
-    this.headingFont = new BitmapFont(Gdx.files.internal("core/assets/fonts/font.fnt"));
+    this.headingFont = new BitmapFont(Gdx.files.internal("core/assets/Crazy Putting/fonts/font.fnt"));
     table.setBounds(150, Gdx.graphics.getHeight() - 150, 100, 100);
 
     String yourScore = "SCORE: " + this.score;

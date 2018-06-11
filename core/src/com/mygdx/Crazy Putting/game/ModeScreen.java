@@ -45,7 +45,7 @@ public class ModeScreen extends InputAdapter implements Screen {
   public void render(float delta) {
     Gdx.gl.glClearColor(0, 1, 0, 0);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    background = new Texture("core/assets/golf.9.png");
+    background = new Texture("core/assets/Crazy Putting/golf.9.png");
 
     this.stage.act(delta);
     stage.getBatch().begin();
@@ -57,10 +57,10 @@ public class ModeScreen extends InputAdapter implements Screen {
   @Override
   public void show() {
     this.stage = new Stage();
-    this.atlas = new TextureAtlas("C:\\Users\\matte.LAPTOP-FLG8V3QC\\Documents\\University Maastricht\\PROJECTS\\Project.Putting\\core\\assets\\button.pack");
+    this.atlas = new TextureAtlas("core/assets/Crazy Putting/button.pack");
     this.skin = new Skin(atlas);
     this.table = new Table(skin);
-    this.headingFont = new BitmapFont(Gdx.files.internal("core/assets/fonts/font.fnt"));
+    this.headingFont = new BitmapFont(Gdx.files.internal("core/assets/Crazy Putting/fonts/font.fnt"));
     this.font = new BitmapFont();
     table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
