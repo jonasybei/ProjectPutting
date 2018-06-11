@@ -1,0 +1,13 @@
+
+PowerBar.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+pwerBar
+  rotate: false
+  xy: 0, 0
+  size: 8, 62
+  split: 0, 0, 0, 0
+  orig: 8, 62
+  offset: 0, 0
+  index: -1
