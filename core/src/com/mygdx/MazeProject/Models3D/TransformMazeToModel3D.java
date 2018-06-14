@@ -12,12 +12,15 @@ public class TransformMazeToModel3D {
   private WallsGeneratror wallsGen;
   private float distanceWallToPoint = 0.4f;
   private float wallHeight = 3f;
+  private float distanceToCenter;
+
 
   public TransformMazeToModel3D(Cell[][] maze) {
     this.maze = maze;
     this.wallsGen = new WallsGeneratror();
     this.walls = new ArrayList<ModelInstance>();
-    
+    this.distanceToCenter = this.maze.length / 2;
+
 
   }
 
@@ -28,12 +31,13 @@ public class TransformMazeToModel3D {
 
         boolean[] currentCellWalls = this.maze[i][j].getCellWalls();
 
+
         if (currentCellWalls[0]) {
 
           ModelInstance wall = wallsGen.generateWall("horizontal");
-          float y = (i - distanceWallToPoint);
-          int x = j;
-          wall.transform.setTranslation(y, wallHeight, x);
+          float y = (i - distanceWallToPoint) - distanceToCenter;
+          float x = j - distanceToCenter;
+          wall.transform.setTranslation(x, wallHeight, y);
           this.walls.add(wall);
 
 
@@ -41,27 +45,27 @@ public class TransformMazeToModel3D {
         if (currentCellWalls[1]) {
 
           ModelInstance wall = wallsGen.generateWall("horizontal");
-          float y = (i + distanceWallToPoint);
-          int x = j;
-          wall.transform.setTranslation(y, wallHeight, x);
+          float y = (i + distanceWallToPoint) - distanceToCenter;
+          float x = j - distanceToCenter;
+          wall.transform.setTranslation(x, wallHeight, y);
           this.walls.add(wall);
 
         }
         if (currentCellWalls[2]) {
 
           ModelInstance wall = wallsGen.generateWall("vertical");
-          int y = i;
-          float x = (j + distanceWallToPoint);
-          wall.transform.setTranslation(y, wallHeight, x);
+          float y = i - distanceToCenter;
+          float x = (j - distanceWallToPoint) - distanceToCenter;
+          wall.transform.setTranslation(x, wallHeight, y);
           this.walls.add(wall);
 
         }
         if (currentCellWalls[3]) {
 
           ModelInstance wall = wallsGen.generateWall("vertical");
-          int y = i;
-          float x = (j - distanceWallToPoint);
-          wall.transform.setTranslation(y, wallHeight, x);
+          float y = i - distanceToCenter;
+          float x = (j + distanceWallToPoint) - distanceToCenter;
+          wall.transform.setTranslation(x, wallHeight, y);
           this.walls.add(wall);
 
 

@@ -16,10 +16,12 @@ public class WallsGeneratror {
 
   public ModelInstance generateWall(String direction) {
     if (direction.equals("horizontal")) {
-      return new ModelInstance(modelBuilder.createBox(wallWidth, wallHeight, wallLength, new Material(ColorAttribute.createDiffuse(Color.BLUE)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal));
+      return new ModelInstance(modelBuilder.createBox(wallLength, wallHeight, wallWidth, new Material(ColorAttribute.createDiffuse(Color.BLUE)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal));
+
     } else {
-      return new ModelInstance(modelBuilder.createBox(wallLength, wallHeight, wallWidth, new Material(ColorAttribute.createDiffuse(Color.WHITE)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal));
+      return new ModelInstance(modelBuilder.createBox(wallWidth, wallHeight, wallLength, new Material(ColorAttribute.createDiffuse(Color.WHITE)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal));
 
     }
   }
 }
+

@@ -93,14 +93,16 @@ public class GameScreen extends InputAdapter implements Screen {
     this.rollingBall = new Ball();
     this.wallGen = new WallsGeneratror();
     this.level = 3;
-    this.mazeGen = new MazeGeneratorABalg(10);
+    this.mazeGen = new MazeGeneratorABalg(5);
     this.tmm = new TransformMazeToModel3D(mazeGen.getMaze());
+    this.walls = tmm.getWalls();
     createLevel(level);
 
   }
 
   @Override
   public void render(float delta) {
+
 
     if (loaded && ready) {
 
@@ -441,8 +443,6 @@ public class GameScreen extends InputAdapter implements Screen {
     ball = new ModelInstance(modelBuilder.createSphere(ballDiameter, ballDiameter, ballDiameter, 20, 20, new Material(ColorAttribute.createDiffuse(Color.WHITE)), attr));
 
     arrow3D = new ModelInstance(modelBuilder.createArrow(0, getArrowHeight(), 0, 2, getArrowHeight(), 0, 0.1f, 0.1f, 5, GL20.GL_TRIANGLES, new Material(ColorAttribute.createDiffuse(Color.RED)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal));
-
-    walls = tmm.getWalls();
 
 
     Vector2 s = m.getStartPos();

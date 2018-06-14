@@ -43,7 +43,7 @@ public class MazeGeneratorABalg {
       int currentY = this.currentCell.getCellPos()[0];
       int currentX = this.currentCell.getCellPos()[1];
 
-      System.out.println("current cell pos = " + currentY + "  " + currentX);
+      //System.out.println("current cell pos = " + currentY + "  " + currentX);
 
       ArrayList<Cell> unvisitedNeighbours = this.maze[currentY][currentX].checkNeighbours(this.maze);
       int unvisitedNeigSize = unvisitedNeighbours.size();
@@ -60,30 +60,30 @@ public class MazeGeneratorABalg {
         int nextCellY = nextCell.getCellPos()[0];
         int nextCellX = nextCell.getCellPos()[1];
 
-        System.out.println("next cell pos = " + nextCellY + "  " + nextCellX);
+        // System.out.println("next cell pos = " + nextCellY + "  " + nextCellX);
 
         if (findOutNeigPos(nextCell).equals("top")) {
 
-          System.out.println("destroy top");
+          //System.out.println("destroy top");
 
           this.maze[currentY][currentX].destroyWall(0);
           this.maze[nextCellY][nextCellX].destroyWall(1);
 
         } else if (findOutNeigPos(nextCell).equals("bottom")) {
 
-          System.out.println("destroy bottom");
+          // System.out.println("destroy bottom");
           this.maze[currentY][currentX].destroyWall(1);
           this.maze[nextCellY][nextCellX].destroyWall(0);
 
         } else if (findOutNeigPos(nextCell).equals("left")) {
 
-          System.out.println("destroy left");
+          // System.out.println("destroy left");
           this.maze[currentY][currentX].destroyWall(2);
           this.maze[nextCellY][nextCellX].destroyWall(3);
 
         } else if (findOutNeigPos(nextCell).equals("right")) {
 
-          System.out.println("destroy right");
+          //System.out.println("destroy right");
           this.maze[currentY][currentX].destroyWall(3);
           this.maze[nextCellY][nextCellX].destroyWall(2);
 
@@ -95,7 +95,6 @@ public class MazeGeneratorABalg {
         this.visitedCellsNum++;
 
       } else {
-        System.out.println("hey");
         this.currentCell = this.visitedCells.pop();
       }
 
