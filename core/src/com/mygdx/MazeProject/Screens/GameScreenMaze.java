@@ -7,11 +7,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.*;
+import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
-import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -21,16 +23,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.CrazyPutting.game.*;
-import com.mygdx.MazeProject.Manager.ScreenManagerMaze;
+import com.mygdx.CrazyPutting.managers.ScreenManager;
 import com.mygdx.MazeProject.Models3D.TransformMazeToModel3D;
-import com.mygdx.MazeProject.Models3D.WallsGeneratror;
+import com.mygdx.MazeProject.Models3D.WallSpot;
 import com.mygdx.MazeProject.game.MazeGeneratorABalg;
 
 import java.util.ArrayList;
 
-public class GameScreen extends InputAdapter implements Screen {
+public class GameScreenMaze extends InputAdapter implements Screen {
 
-  ScreenManagerMaze manager;
+  ScreenManager manager;
   ShapeRenderer renderer;
   ExtendViewport viewport;
   SpriteBatch batch;
@@ -42,7 +44,6 @@ public class GameScreen extends InputAdapter implements Screen {
   private Label powerHeading;
 
   private PerspectiveCamera cam;
-  private Model model;
 
   private ModelInstance instance;
   private ModelInstance ball;
@@ -51,15 +52,12 @@ public class GameScreen extends InputAdapter implements Screen {
   private ModelInstance arrow3D;
   private ArrayList<ModelInstance> walls;
   private TransformMazeToModel3D tmm;
-  private WallsGeneratror wallGen;
-  private ArrayList<ModelInstance> tree;
-  private ArrayList<TreeSpot> treesPos;
-  private boolean treeArrayReady;
+  private ArrayList<WallSpot> wallSpots;
+  private String directionOfHittenWall;
 
   private ModelBatch modelBatch;
   private Environment environment;
   private CameraInputController camController;
-  private MeshPartBuilder meshPartBuilder;
 
   private boolean loaded = false;
   private boolean ready = false;
@@ -84,18 +82,17 @@ public class GameScreen extends InputAdapter implements Screen {
   private float ballDiameter = 0.5f;
 
   private MazeGeneratorABalg mazeGen;
-  ;
 
-  public GameScreen(ScreenManagerMaze manager) {
+  public GameScreenMaze(ScreenManager manager, int length) {
     this.score = 0;
     this.manager = manager;
     this.powerBar = new Texture("core/assets/CrazyPutting/pwerBar.9.png");
     this.rollingBall = new Ball();
-    this.wallGen = new WallsGeneratror();
     this.level = 3;
-    this.mazeGen = new MazeGeneratorABalg(5);
+    this.mazeGen = new MazeGeneratorABalg(length);
     this.tmm = new TransformMazeToModel3D(mazeGen.getMaze());
     this.walls = tmm.getWalls();
+    this.wallSpots = tmm.getWallsSpots();
     createLevel(level);
 
   }
@@ -134,18 +131,17 @@ public class GameScreen extends InputAdapter implements Screen {
           this.state = 0;
         }
 
+        if (isBallInWall()) {
+          this.rollingBall.ballIsWall(this.directionOfHittenWall);
+        }
+
 
         pos = rollingBall.getNewPosition();
-        ball.transform.setTranslation(pos.x, (float) Terrain.compute(level, pos.x, pos.y) / 2 + this.ballDiameter / 2, pos.y);
+        ball.transform.setTranslation(pos.x, (float) Terrain.compute(level, pos.x, pos.y) / 2 + this.ballDiameter, pos.y);
 
         Vector3 tmpPos = rollingBall.getPosition();
         float mu = 0.5f;
 
-        for (SandSpot s : m.getSandMap()) {
-          if (s.getPosition().dst(pos.x, pos.y) < ep * s.getRadius()) {
-            mu = 0.9f;
-          }
-        }
         rollingBall.xRungeKutta(mu);
         rollingBall.yRungeKutta(mu);
       }
@@ -338,11 +334,6 @@ public class GameScreen extends InputAdapter implements Screen {
         int ax = (int) (x + 10) * scale;
         int ay = (int) (y + 10) * scale;
 
-        for (SandSpot s : m.getSandMap()) {
-          if (s.getPosition().dst(x, y) < ep * s.getRadius()) {
-            toUse = Color.YELLOW;
-          }
-        }
 
         faces.add(new Face(
                 new Vector3(x, (float) Terrain.compute(t, x, y + ep) / k, y + ep),
@@ -483,5 +474,48 @@ public class GameScreen extends InputAdapter implements Screen {
     return (float) height;
   }
 
+
+  public boolean isBallInWall() {
+    Vector2 rollingBallPos = new Vector2();
+    rollingBallPos.x = this.rollingBall.getPosition().x;
+    rollingBallPos.y = this.rollingBall.getPosition().y;
+    String direction;
+
+    for (WallSpot wall : this.wallSpots) {
+      direction = wall.getDirection();
+
+      if (direction.equals("horizontal")) {
+
+        Vector2 left = wall.getPos();
+        left.x = left.x - 0.8f;
+
+        Vector2 right = wall.getPos();
+        right.x = right.x + 0.8f;
+
+        if (rollingBallPos.dst(wall.getPos()) < this.ballDiameter || rollingBallPos.dst(left) < this.ballDiameter || rollingBallPos.dst(right) < this.ballDiameter) {
+          System.out.printf("ball is in wall");
+          this.directionOfHittenWall = direction;
+          return true;
+        }
+
+      } else {
+
+        Vector2 up = wall.getPos();
+        up.y = up.y - 0.8f;
+
+        Vector2 down = wall.getPos();
+        down.y = down.y + 0.8f;
+
+        if (rollingBallPos.dst(wall.getPos()) < this.ballDiameter || rollingBallPos.dst(up) < this.ballDiameter || rollingBallPos.dst(down) < this.ballDiameter) {
+          System.out.printf("ball is in wall");
+          this.directionOfHittenWall = direction;
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
 }
+
 

@@ -25,13 +25,13 @@ import com.mygdx.CrazyPutting.BotAlgorithms.GreedyBTalg;
 import com.mygdx.CrazyPutting.BotAlgorithms.GreedyBTalgOptimizated;
 import com.mygdx.CrazyPutting.BotAlgorithms.HCBot;
 import com.mygdx.CrazyPutting.WriterAndReader.Writer;
-import com.mygdx.CrazyPutting.managers.ScreenManagerPutting;
+import com.mygdx.CrazyPutting.managers.ScreenManager;
 
 import java.util.ArrayList;
 
 public class GameScreenAuto extends InputAdapter implements Screen {
 
-  ScreenManagerPutting game;
+  ScreenManager game;
   ShapeRenderer renderer;
   ExtendViewport viewport;
   SpriteBatch batch;
@@ -91,7 +91,7 @@ public class GameScreenAuto extends InputAdapter implements Screen {
 
   private float ballDiameter = 0.5f;
 
-  public GameScreenAuto(ScreenManagerPutting game, int level, int alg) {
+  public GameScreenAuto(ScreenManager game, int level, int alg) {
     this.score = 0;
     this.game = game;
     this.alg = alg;

@@ -10,8 +10,8 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 public class WallsGeneratror {
 
   private final float wallWidth = 0.2f;
-  private final float wallHeight = 6f;
-  private final float wallLength = 1f;
+  private final float wallHeight = 4f;
+  private final float wallLength = 2f;
   private final ModelBuilder modelBuilder = new ModelBuilder();
 
   public ModelInstance generateWall(String direction) {

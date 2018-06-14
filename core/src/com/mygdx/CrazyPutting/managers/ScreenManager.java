@@ -4,8 +4,10 @@ package com.mygdx.CrazyPutting.managers;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.CrazyPutting.game.*;
+import com.mygdx.MazeProject.Screens.GameScreenMaze;
+import com.mygdx.MazeProject.Screens.MazeLengthScreen;
 
-public class ScreenManagerPutting extends Game {
+public class ScreenManager extends Game {
 
   private GameScreen game;
   private GameScreenAuto autoGame;
@@ -69,6 +71,19 @@ public class ScreenManagerPutting extends Game {
   public void resumeGameScreen() {
     setScreen(this.game);
   }
+
+  public void showGameScreenMaze(int length) {
+    setScreen(new GameScreenMaze(this, length));
+  }
+
+  public void showMazeLengthScreen() {
+    setScreen(new MazeLengthScreen(this));
+  }
+
+  public void showChooseProjectScreen() {
+    setScreen(new ChooseProjectScreen(this));
+  }
+
 
   public void exitTheGame() {
     Gdx.app.exit();

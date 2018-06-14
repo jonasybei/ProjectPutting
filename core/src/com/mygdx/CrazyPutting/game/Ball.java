@@ -210,6 +210,16 @@ public class Ball {
     totalVelocity = 0;
   }
 
+  public void ballIsWall(String direction) {
+
+    if (direction.equals("horizontal")) {
+      this.velocity.y = -this.velocity.y;
+    } else {
+      this.velocity.x = -this.velocity.x;
+    }
+
+  }
+
   public float getXSlope() {
     return xSlope;
   }

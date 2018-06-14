@@ -26,8 +26,13 @@ public class MazeGeneratorABalg {
 
     this.currentCell = this.maze[0][0];
     this.maze[0][0].visit();
+    // creating a entry
+    this.maze[0][0].destroyWall(0);
     this.visitedCellsNum++;
 
+    //creating an exit
+    int mazeLengthIndex = this.maze.length - 1;
+    this.maze[mazeLengthIndex][mazeLengthIndex].destroyWall(1);
   }
 
 
@@ -43,7 +48,6 @@ public class MazeGeneratorABalg {
       int currentY = this.currentCell.getCellPos()[0];
       int currentX = this.currentCell.getCellPos()[1];
 
-      //System.out.println("current cell pos = " + currentY + "  " + currentX);
 
       ArrayList<Cell> unvisitedNeighbours = this.maze[currentY][currentX].checkNeighbours(this.maze);
       int unvisitedNeigSize = unvisitedNeighbours.size();
@@ -60,30 +64,23 @@ public class MazeGeneratorABalg {
         int nextCellY = nextCell.getCellPos()[0];
         int nextCellX = nextCell.getCellPos()[1];
 
-        // System.out.println("next cell pos = " + nextCellY + "  " + nextCellX);
-
         if (findOutNeigPos(nextCell).equals("top")) {
-
-          //System.out.println("destroy top");
 
           this.maze[currentY][currentX].destroyWall(0);
           this.maze[nextCellY][nextCellX].destroyWall(1);
 
         } else if (findOutNeigPos(nextCell).equals("bottom")) {
 
-          // System.out.println("destroy bottom");
           this.maze[currentY][currentX].destroyWall(1);
           this.maze[nextCellY][nextCellX].destroyWall(0);
 
         } else if (findOutNeigPos(nextCell).equals("left")) {
 
-          // System.out.println("destroy left");
           this.maze[currentY][currentX].destroyWall(2);
           this.maze[nextCellY][nextCellX].destroyWall(3);
 
         } else if (findOutNeigPos(nextCell).equals("right")) {
 
-          //System.out.println("destroy right");
           this.maze[currentY][currentX].destroyWall(3);
           this.maze[nextCellY][nextCellX].destroyWall(2);
 

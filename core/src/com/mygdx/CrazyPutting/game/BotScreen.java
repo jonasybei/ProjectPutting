@@ -19,11 +19,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.CrazyPutting.WriterAndReader.Writer;
-import com.mygdx.CrazyPutting.managers.ScreenManagerPutting;
+import com.mygdx.CrazyPutting.managers.ScreenManager;
 
 
 public class BotScreen extends InputAdapter implements Screen {
-  private ScreenManagerPutting game;
+  private ScreenManager game;
   private Stage stage;
   private TextureAtlas atlas;
   private Skin skin;
@@ -40,7 +40,7 @@ public class BotScreen extends InputAdapter implements Screen {
   private Writer writer;
 
 
-  public BotScreen(ScreenManagerPutting game) {
+  public BotScreen(ScreenManager game) {
     this.game = game;
     this.writer = new Writer();
   }

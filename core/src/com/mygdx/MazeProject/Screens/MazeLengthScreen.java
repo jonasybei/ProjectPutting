@@ -18,23 +18,28 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.mygdx.MazeProject.Manager.ScreenManagerMaze;
+import com.mygdx.CrazyPutting.managers.ScreenManager;
 
 
-public class StartMenu extends InputAdapter implements Screen {
+public class MazeLengthScreen extends InputAdapter implements Screen {
   private Stage stage;
   private TextureAtlas atlas;
   private Skin skin;
   private Table table;
-  private TextButton playButton;
+  private TextButton mazeLength5Button;
+  private TextButton mazeLength6Button;
+  private TextButton mazeLength7Button;
+  private TextButton mazeLength8Button;
+  private TextButton mazeLength9Button;
+  private TextButton mazeLength10Button;
   private TextButton exitButton;
   private BitmapFont font;
   private Label heading;
   private Texture background;
-  private ScreenManagerMaze manager;
+  private ScreenManager manager;
 
 
-  public StartMenu(ScreenManagerMaze manager) {
+  public MazeLengthScreen(ScreenManager manager) {
     this.manager = manager;
   }
 
@@ -69,19 +74,69 @@ public class StartMenu extends InputAdapter implements Screen {
     textButtonStyle.font = this.font;
     textButtonStyle.fontColor = Color.BLACK;
 
-    this.playButton = new TextButton("PLAY", textButtonStyle);
-    this.playButton.pad(50);
-    this.playButton.addListener(new ClickListener() {
+    this.mazeLength5Button = new TextButton("LENGTH 5", textButtonStyle);
+    this.mazeLength5Button.pad(20);
+    this.mazeLength5Button.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        manager.showGameScreen();
+        manager.showGameScreenMaze(5);
+
+      }
+    });
+
+    this.mazeLength6Button = new TextButton("LENGTH 6", textButtonStyle);
+    this.mazeLength6Button.pad(20);
+    this.mazeLength6Button.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        manager.showGameScreenMaze(6);
+
+      }
+    });
+
+    this.mazeLength7Button = new TextButton("LENGTH 7", textButtonStyle);
+    this.mazeLength7Button.pad(20);
+    this.mazeLength7Button.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        manager.showGameScreenMaze(7);
+
+      }
+    });
+
+    this.mazeLength8Button = new TextButton("LENGTH 8", textButtonStyle);
+    this.mazeLength8Button.pad(20);
+    this.mazeLength8Button.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        manager.showGameScreenMaze(8);
+
+      }
+    });
+
+    this.mazeLength9Button = new TextButton("LENGTH 9", textButtonStyle);
+    this.mazeLength9Button.pad(20);
+    this.mazeLength9Button.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        manager.showGameScreenMaze(9);
+
+      }
+    });
+
+    this.mazeLength10Button = new TextButton("LENGTH 10", textButtonStyle);
+    this.mazeLength10Button.pad(20);
+    this.mazeLength10Button.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        manager.showGameScreenMaze(10);
 
       }
     });
 
 
     this.exitButton = new TextButton("EXIT", textButtonStyle);
-    this.exitButton.pad(50);
+    this.exitButton.pad(20);
     this.exitButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
@@ -98,8 +153,23 @@ public class StartMenu extends InputAdapter implements Screen {
     this.table.add(heading);
     this.table.getCell(this.heading).spaceBottom(100);
     this.table.row();
-    this.table.add(this.playButton).width(800f);
-    this.table.getCell(this.playButton).spaceBottom(50);
+    this.table.add(this.mazeLength5Button).width(800f);
+    this.table.getCell(this.mazeLength5Button).spaceBottom(20);
+    this.table.row();
+    this.table.add(this.mazeLength6Button).width(800f);
+    this.table.getCell(this.mazeLength6Button).spaceBottom(20);
+    this.table.row();
+    this.table.add(this.mazeLength7Button).width(800f);
+    this.table.getCell(this.mazeLength7Button).spaceBottom(20);
+    this.table.row();
+    this.table.add(this.mazeLength8Button).width(800f);
+    this.table.getCell(this.mazeLength8Button).spaceBottom(20);
+    this.table.row();
+    this.table.add(this.mazeLength9Button).width(800f);
+    this.table.getCell(this.mazeLength9Button).spaceBottom(20);
+    this.table.row();
+    this.table.add(this.mazeLength10Button).width(800f);
+    this.table.getCell(this.mazeLength10Button).spaceBottom(20);
     this.table.row();
     this.table.add(this.exitButton).width(800f);
     this.stage.addActor(this.table);

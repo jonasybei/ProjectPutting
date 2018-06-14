@@ -19,11 +19,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.mygdx.CrazyPutting.managers.ScreenManagerPutting;
+import com.mygdx.CrazyPutting.managers.ScreenManager;
 
 
 public class ModeScreen extends InputAdapter implements Screen {
-  private ScreenManagerPutting game;
+  private ScreenManager game;
   private FitViewport viewport;
   private Stage stage;
   private TextureAtlas atlas;
@@ -38,7 +38,7 @@ public class ModeScreen extends InputAdapter implements Screen {
   private Texture background;
 
 
-  public ModeScreen(ScreenManagerPutting game) {
+  public ModeScreen(ScreenManager game) {
     this.game = game;
   }
 
@@ -97,7 +97,7 @@ public class ModeScreen extends InputAdapter implements Screen {
     this.backButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        game.showMenuScreen();
+        game.showChooseProjectScreen();
       }
     });
 

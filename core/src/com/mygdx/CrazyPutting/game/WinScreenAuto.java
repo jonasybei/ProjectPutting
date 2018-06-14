@@ -20,11 +20,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.CrazyPutting.WriterAndReader.Writer;
-import com.mygdx.CrazyPutting.managers.ScreenManagerPutting;
+import com.mygdx.CrazyPutting.managers.ScreenManager;
 
 
 public class WinScreenAuto extends InputAdapter implements Screen {
-  private ScreenManagerPutting game;
+  private ScreenManager game;
   private FitViewport viewport;
   private Stage stage;
   private TextureAtlas atlas;
@@ -42,7 +42,7 @@ public class WinScreenAuto extends InputAdapter implements Screen {
   private Texture background;
   private Writer writer;
 
-  public WinScreenAuto(ScreenManagerPutting game, int score, int level) {
+  public WinScreenAuto(ScreenManager game, int score, int level) {
     this.level = level;
     this.score = score;
     this.game = game;

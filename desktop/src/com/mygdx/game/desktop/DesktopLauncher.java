@@ -2,7 +2,7 @@ package com.mygdx.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.mygdx.MazeProject.Manager.ScreenManagerMaze;
+import com.mygdx.CrazyPutting.managers.ScreenManager;
 
 
 public class DesktopLauncher {
@@ -12,8 +12,6 @@ public class DesktopLauncher {
     config.width = LwjglApplicationConfiguration.getDesktopDisplayMode().width;
     config.height = LwjglApplicationConfiguration.getDesktopDisplayMode().height;
     config.fullscreen = true;
-    //new LwjglApplication(new ScreenManager(), config);
-    //new LwjglApplication(new ScreenManagerPutting(), config);
-    new LwjglApplication(new ScreenManagerMaze(), config);
+    new LwjglApplication(new ScreenManager(), config);
   }
 }

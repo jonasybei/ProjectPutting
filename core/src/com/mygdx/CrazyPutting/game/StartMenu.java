@@ -19,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.mygdx.CrazyPutting.managers.ScreenManagerPutting;
+import com.mygdx.CrazyPutting.managers.ScreenManager;
 
 import java.awt.*;
 import java.io.File;
@@ -27,7 +27,7 @@ import java.io.IOException;
 
 
 public class StartMenu extends InputAdapter implements Screen {
-  private ScreenManagerPutting game;
+  private ScreenManager game;
   private FitViewport viewport;
   private Stage stage;
   private TextureAtlas atlas;
@@ -42,7 +42,7 @@ public class StartMenu extends InputAdapter implements Screen {
   private Texture background;
 
 
-  public StartMenu(ScreenManagerPutting game) {
+  public StartMenu(ScreenManager game) {
     this.game = game;
   }
 
@@ -83,7 +83,7 @@ public class StartMenu extends InputAdapter implements Screen {
     this.playButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        game.showModeScreen();
+        game.showChooseProjectScreen();
 
       }
     });

@@ -9,14 +9,17 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.CrazyPutting.WriterAndReader.Writer;
-import com.mygdx.CrazyPutting.managers.ScreenManagerPutting;
+import com.mygdx.CrazyPutting.managers.ScreenManager;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -24,9 +27,10 @@ import java.awt.event.ActionListener;
 
 
 public class InsertNameScreen extends InputAdapter implements Screen {
-  private ScreenManagerPutting game;
+  private ScreenManager game;
   private Stage stage;
   private TextureAtlas atlas;
+  private TextButton done;
   private Skin skin;
   private Table table;
   private BitmapFont font;
@@ -37,10 +41,10 @@ public class InsertNameScreen extends InputAdapter implements Screen {
   private Writer writer;
 
 
-  public InsertNameScreen(ScreenManagerPutting game) {
+  public InsertNameScreen(ScreenManager game) {
     this.writer = new Writer();
     this.game = game;
-    insertName();
+    //insertName();
   }
 
   @Override
@@ -81,6 +85,15 @@ public class InsertNameScreen extends InputAdapter implements Screen {
     textButtonStyle.font = this.font;
     textButtonStyle.fontColor = Color.BLACK;
 
+    this.done = new TextButton("DONE", textButtonStyle);
+    this.done.pad(50);
+    this.done.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        game.showLevelScreen();
+
+      }
+    });
 
     LabelStyle headingStyle = new Label.LabelStyle(this.headingFont, Color.BLACK);
     this.heading = new Label("PLEASE TYPE YOUR NAME", headingStyle);
@@ -89,6 +102,9 @@ public class InsertNameScreen extends InputAdapter implements Screen {
 
     this.table.add(heading);
     this.table.getCell(this.heading).spaceBottom(50);
+    this.table.row();
+    this.table.add(this.done);
+    this.table.getCell(this.done).spaceBottom(50);
     this.table.row();
     this.stage.addActor(this.table);
     Gdx.input.setInputProcessor(stage);

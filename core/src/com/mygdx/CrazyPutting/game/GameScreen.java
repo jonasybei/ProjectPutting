@@ -20,13 +20,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.mygdx.CrazyPutting.managers.ScreenManagerPutting;
+import com.mygdx.CrazyPutting.managers.ScreenManager;
 
 import java.util.ArrayList;
 
 public class GameScreen extends InputAdapter implements Screen {
 
-  ScreenManagerPutting game;
+  ScreenManager game;
   ShapeRenderer renderer;
   ExtendViewport viewport;
   SpriteBatch batch;
@@ -78,7 +78,7 @@ public class GameScreen extends InputAdapter implements Screen {
   private float ballDiameter = 0.5f;
   ;
 
-  public GameScreen(ScreenManagerPutting game, int level) {
+  public GameScreen(ScreenManager game, int level) {
     this.score = 0;
     this.game = game;
     this.powerBar = new Texture("core/assets/CrazyPutting/pwerBar.9.png");
