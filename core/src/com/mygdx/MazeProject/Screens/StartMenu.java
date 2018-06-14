@@ -1,4 +1,4 @@
-package com.mygdx;
+package com.mygdx.MazeProject.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -18,23 +18,23 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.MazeProject.Manager.ScreenManagerMaze;
 
 
-public class ChooseProjectScreen extends InputAdapter implements Screen {
+public class StartMenu extends InputAdapter implements Screen {
   private Stage stage;
   private TextureAtlas atlas;
   private Skin skin;
   private Table table;
-  private TextButton projectPuttingButton;
-  private TextButton projectMazeButton;
+  private TextButton playButton;
   private TextButton exitButton;
   private BitmapFont font;
   private Label heading;
   private Texture background;
-  private ScreenManager manager;
+  private ScreenManagerMaze manager;
 
 
-  public ChooseProjectScreen(ScreenManager game) {
+  public StartMenu(ScreenManagerMaze manager) {
     this.manager = manager;
   }
 
@@ -42,7 +42,7 @@ public class ChooseProjectScreen extends InputAdapter implements Screen {
   public void render(float delta) {
     Gdx.gl.glClearColor(0, 1, 0, 0);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    background = new Texture("core/assets/NeutralBackground.png");
+    background = new Texture("core/assets/MazeProject/backgroundPics/MazePic3.jpg");
 
 
     this.stage.act(delta);
@@ -58,7 +58,7 @@ public class ChooseProjectScreen extends InputAdapter implements Screen {
     this.atlas = new TextureAtlas();
     this.skin = new Skin(atlas);
     this.table = new Table(skin);
-    this.font = new BitmapFont(Gdx.files.internal("core/assets/MazeProject/Fonts/font1.fnt"));
+    this.font = new BitmapFont(Gdx.files.internal("core/assets/MazeProject/fonts/font1.fnt"));
     table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     TextButtonStyle textButtonStyle = new TextButtonStyle();
@@ -69,22 +69,12 @@ public class ChooseProjectScreen extends InputAdapter implements Screen {
     textButtonStyle.font = this.font;
     textButtonStyle.fontColor = Color.BLACK;
 
-    this.projectPuttingButton = new TextButton("Putting project", textButtonStyle);
-    this.projectPuttingButton.pad(50);
-    this.projectPuttingButton.addListener(new ClickListener() {
+    this.playButton = new TextButton("PLAY", textButtonStyle);
+    this.playButton.pad(50);
+    this.playButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-
-
-      }
-    });
-
-    this.projectMazeButton = new TextButton("Maze project", textButtonStyle);
-    this.projectMazeButton.pad(50);
-    this.projectMazeButton.addListener(new ClickListener() {
-      @Override
-      public void clicked(InputEvent event, float x, float y) {
-
+        manager.showGameScreen();
 
       }
     });
@@ -101,18 +91,15 @@ public class ChooseProjectScreen extends InputAdapter implements Screen {
 
 
     LabelStyle headingStyle = new Label.LabelStyle(this.font, Color.BLACK);
-    this.heading = new Label("CHOOSE THE PROJECT", headingStyle);
+    this.heading = new Label("MAZE PROJECT", headingStyle);
     this.heading.setFontScale(2);
 
 
     this.table.add(heading);
     this.table.getCell(this.heading).spaceBottom(100);
     this.table.row();
-    this.table.add(this.projectPuttingButton).width(800f);
-    this.table.getCell(this.projectPuttingButton).spaceBottom(50);
-    this.table.row();
-    this.table.add(this.projectMazeButton).width(800f);
-    this.table.getCell(this.projectMazeButton).spaceBottom(50);
+    this.table.add(this.playButton).width(800f);
+    this.table.getCell(this.playButton).spaceBottom(50);
     this.table.row();
     this.table.add(this.exitButton).width(800f);
     this.stage.addActor(this.table);

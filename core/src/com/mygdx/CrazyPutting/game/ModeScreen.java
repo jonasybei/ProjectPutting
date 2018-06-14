@@ -1,4 +1,4 @@
-package com.mygdx;
+package com.mygdx.CrazyPutting.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -18,32 +18,35 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.mygdx.CrazyPutting.managers.ScreenManagerPutting;
 
 
-public class ChooseProjectScreen extends InputAdapter implements Screen {
+public class ModeScreen extends InputAdapter implements Screen {
+  private ScreenManagerPutting game;
+  private FitViewport viewport;
   private Stage stage;
   private TextureAtlas atlas;
   private Skin skin;
   private Table table;
-  private TextButton projectPuttingButton;
-  private TextButton projectMazeButton;
-  private TextButton exitButton;
+  private TextButton singlePlayerButton;
+  private TextButton autoPlayerButton;
+  private TextButton backButton;
   private BitmapFont font;
+  private BitmapFont headingFont;
   private Label heading;
   private Texture background;
-  private ScreenManager manager;
 
 
-  public ChooseProjectScreen(ScreenManager game) {
-    this.manager = manager;
+  public ModeScreen(ScreenManagerPutting game) {
+    this.game = game;
   }
 
   @Override
   public void render(float delta) {
     Gdx.gl.glClearColor(0, 1, 0, 0);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    background = new Texture("core/assets/NeutralBackground.png");
-
+    background = new Texture("core/assets/CrazyPutting/golfBack.jpg");
 
     this.stage.act(delta);
     stage.getBatch().begin();
@@ -55,71 +58,68 @@ public class ChooseProjectScreen extends InputAdapter implements Screen {
   @Override
   public void show() {
     this.stage = new Stage();
-    this.atlas = new TextureAtlas();
+    this.atlas = new TextureAtlas("core/assets/CrazyPutting/button.pack");
     this.skin = new Skin(atlas);
     this.table = new Table(skin);
-    this.font = new BitmapFont(Gdx.files.internal("core/assets/MazeProject/Fonts/font1.fnt"));
+    this.headingFont = new BitmapFont(Gdx.files.internal("core/assets/CrazyPutting/fonts/font.fnt"));
+    this.font = new BitmapFont();
     table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     TextButtonStyle textButtonStyle = new TextButtonStyle();
-    //textButtonStyle.up = skin.getDrawable("button_up");
-    //textButtonStyle.down = skin.getDrawable("button_down");
+    textButtonStyle.up = skin.getDrawable("button_up");
+    textButtonStyle.down = skin.getDrawable("button_down");
     textButtonStyle.pressedOffsetX = 1;
     textButtonStyle.pressedOffsetY = -1;
     textButtonStyle.font = this.font;
     textButtonStyle.fontColor = Color.BLACK;
 
-    this.projectPuttingButton = new TextButton("Putting project", textButtonStyle);
-    this.projectPuttingButton.pad(50);
-    this.projectPuttingButton.addListener(new ClickListener() {
+    this.singlePlayerButton = new TextButton("SINGLE PLAYER", textButtonStyle);
+    this.singlePlayerButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
+        game.showNameScreen();
+      }
+    });
+    this.singlePlayerButton.pad(50);
+
+    this.autoPlayerButton = new TextButton("BOT", textButtonStyle);
+    this.autoPlayerButton.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        game.showBotScreen();
+      }
+    });
+    this.autoPlayerButton.pad(50);
 
 
+    this.backButton = new TextButton("BACK", textButtonStyle);
+    this.backButton.pad(50);
+    this.backButton.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        game.showMenuScreen();
       }
     });
 
-    this.projectMazeButton = new TextButton("Maze project", textButtonStyle);
-    this.projectMazeButton.pad(50);
-    this.projectMazeButton.addListener(new ClickListener() {
-      @Override
-      public void clicked(InputEvent event, float x, float y) {
 
-
-      }
-    });
-
-
-    this.exitButton = new TextButton("EXIT", textButtonStyle);
-    this.exitButton.pad(50);
-    this.exitButton.addListener(new ClickListener() {
-      @Override
-      public void clicked(InputEvent event, float x, float y) {
-        manager.exitTheGame();
-      }
-    });
-
-
-    LabelStyle headingStyle = new Label.LabelStyle(this.font, Color.BLACK);
-    this.heading = new Label("CHOOSE THE PROJECT", headingStyle);
-    this.heading.setFontScale(2);
+    LabelStyle headingStyle = new Label.LabelStyle(this.headingFont, Color.BLACK);
+    this.heading = new Label("MODE SETTINGS", headingStyle);
+    this.heading.setFontScale(3);
 
 
     this.table.add(heading);
-    this.table.getCell(this.heading).spaceBottom(100);
+    this.table.getCell(this.heading).spaceBottom(50);
     this.table.row();
-    this.table.add(this.projectPuttingButton).width(800f);
-    this.table.getCell(this.projectPuttingButton).spaceBottom(50);
+    this.table.add(this.singlePlayerButton).width(800f);
+    this.table.getCell(this.singlePlayerButton).spaceBottom(50);
     this.table.row();
-    this.table.add(this.projectMazeButton).width(800f);
-    this.table.getCell(this.projectMazeButton).spaceBottom(50);
+    this.table.add(this.autoPlayerButton).width(800f);
+    this.table.getCell(this.autoPlayerButton).spaceBottom(50);
     this.table.row();
-    this.table.add(this.exitButton).width(800f);
+    this.table.add(this.backButton).width(800f);
     this.stage.addActor(this.table);
     Gdx.input.setInputProcessor(stage);
-
   }
-
 
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
