@@ -17,6 +17,6 @@ public class DFSCell extends Cell{
   }
 
   public Cell convertToCell() {
-    return new Cell(y, x);
+    return new Cell(this.y, this.x);
   }
 }

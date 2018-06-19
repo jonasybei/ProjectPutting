@@ -7,7 +7,7 @@ public class DFSSolver {
   }
 
   public DFSCell findExit(Cell[][] maze) {
-    
+
     //make the entire maze unvisited
     for(int i = 0; i < maze.length; i++) {
       for(int j = 0; j < maze[i].length; j++) {
@@ -56,9 +56,13 @@ public class DFSSolver {
         if(!currentCell.getCellWalls[3] && currentCellPosition[1] < maze[0].length -1 && !maze[currentCellPosition[0]][currentCellPosition[1] + 1].isVisited()) {
           currentCells.add(DFSCell.convertFromCell(maze[currentCellPosition[0]][currentCellPosition[1] + 1], currentCell));
         }
+
+        currentCells.remove(currentCell);
       }
     }
-
+    //This should never be reached.
+    System.out.println("ERROR!");
+    return null;
   }
 
   public ArrayList<DFSCell> exitToCell(DFSCell cell) {
@@ -66,7 +70,7 @@ public class DFSSolver {
     DFSCell current = cell;
 
     while(current!=null) {
-      result.add(current);
+      result.add(0, current);
       current = current.getParent();
     }
 
