@@ -132,7 +132,9 @@ public class GameScreenMaze extends InputAdapter implements Screen {
         }
 
         if (isBallInWall()) {
-          this.rollingBall.ballIsWall(this.directionOfHittenWall);
+          //this.rollingBall.ballIsWall(this.directionOfHittenWall);
+          rollingBall.resetPosition();
+          this.state = 0;
         }
 
 
@@ -484,30 +486,32 @@ public class GameScreenMaze extends InputAdapter implements Screen {
     for (WallSpot wall : this.wallSpots) {
       direction = wall.getDirection();
 
-      if (direction.equals("horizontal")) {
+      if (direction.equals("vertical")) {
 
-        Vector2 left = wall.getPos();
-        left.x = left.x - 0.8f;
+        float leftBound = wall.getPos().x - 1;
+        float rightBound = wall.getPos().x + 1;
+        float upBound = wall.getPos().y + 0.1f;
+        float downBound = wall.getPos().y - 0.1f;
 
-        Vector2 right = wall.getPos();
-        right.x = right.x + 0.8f;
 
-        if (rollingBallPos.dst(wall.getPos()) < this.ballDiameter || rollingBallPos.dst(left) < this.ballDiameter || rollingBallPos.dst(right) < this.ballDiameter) {
+        if (rollingBallPos.x > leftBound && rollingBallPos.x < rightBound && rollingBallPos.y > downBound && rollingBallPos.y < upBound) {
           System.out.printf("ball is in wall");
+          System.out.println(direction);
           this.directionOfHittenWall = direction;
           return true;
         }
 
       } else {
 
-        Vector2 up = wall.getPos();
-        up.y = up.y - 0.8f;
+        float leftBound = wall.getPos().x - 0.1f;
+        float rightBound = wall.getPos().x + 0.1f;
+        float upBound = wall.getPos().y + 1f;
+        float downBound = wall.getPos().y - 1f;
 
-        Vector2 down = wall.getPos();
-        down.y = down.y + 0.8f;
 
-        if (rollingBallPos.dst(wall.getPos()) < this.ballDiameter || rollingBallPos.dst(up) < this.ballDiameter || rollingBallPos.dst(down) < this.ballDiameter) {
+        if (rollingBallPos.x > leftBound && rollingBallPos.x < rightBound && rollingBallPos.y > downBound && rollingBallPos.y < upBound) {
           System.out.printf("ball is in wall");
+          System.out.println(direction);
           this.directionOfHittenWall = direction;
           return true;
         }
