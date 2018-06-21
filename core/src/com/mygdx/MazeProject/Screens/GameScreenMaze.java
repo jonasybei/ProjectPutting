@@ -26,6 +26,7 @@ import com.mygdx.CrazyPutting.game.*;
 import com.mygdx.CrazyPutting.managers.ScreenManager;
 import com.mygdx.MazeProject.Models3D.TransformMazeToModel3D;
 import com.mygdx.MazeProject.Models3D.WallSpot;
+import com.mygdx.MazeProject.game.Cell;
 import com.mygdx.MazeProject.game.MazeGeneratorABalg;
 
 import java.util.ArrayList;
@@ -82,6 +83,7 @@ public class GameScreenMaze extends InputAdapter implements Screen {
   private float ballDiameter = 0.5f;
 
   private MazeGeneratorABalg mazeGen;
+  private Cell[][] maze;
 
   public GameScreenMaze(ScreenManager manager, int length) {
     this.score = 0;
@@ -90,7 +92,8 @@ public class GameScreenMaze extends InputAdapter implements Screen {
     this.rollingBall = new Ball();
     this.level = 3;
     this.mazeGen = new MazeGeneratorABalg(length);
-    this.tmm = new TransformMazeToModel3D(mazeGen.getMaze());
+    this.maze = mazeGen.getMaze();
+    this.tmm = new TransformMazeToModel3D(this.maze);
     this.walls = tmm.getWalls();
     this.wallSpots = tmm.getWallsSpots();
     createLevel(level);
@@ -113,9 +116,9 @@ public class GameScreenMaze extends InputAdapter implements Screen {
 
         rollingBall.setSafePosition(tmpPos);
 
-        if (m.getEndPos().dst(tmpPos.x, tmpPos.y) < 0.5) {
+        if (getDistanCeToExit() < 0.5) {
           state = 2;
-          //game.showWinScreen(this.score, this.level);
+          manager.showWinScreen(this.score, this.level);
         }
         rollingBall.resetVelocity();
         state = 0;
@@ -132,9 +135,7 @@ public class GameScreenMaze extends InputAdapter implements Screen {
         }
 
         if (isBallInWall()) {
-          //this.rollingBall.ballIsWall(this.directionOfHittenWall);
-          rollingBall.resetPosition();
-          this.state = 0;
+          this.rollingBall.ballIsWall(this.directionOfHittenWall);
         }
 
 
@@ -518,6 +519,29 @@ public class GameScreenMaze extends InputAdapter implements Screen {
       }
     }
     return false;
+  }
+
+  public float[] getCellRenderPosition(int y, int x) {
+
+    float distanceToCenter = this.maze.length / 2;
+    float[] renderPos = new float[2];
+
+    renderPos[0] = (y - distanceToCenter) * 2;
+    renderPos[1] = (x - distanceToCenter) * 2;
+
+    return renderPos;
+  }
+
+  public float getDistanCeToExit() {
+
+    int mazeLengthIndex = this.maze.length - 1;
+
+    Vector3 exitPos = new Vector3();
+    exitPos.y = getCellRenderPosition(mazeLengthIndex, mazeLengthIndex)[0];
+    exitPos.x = getCellRenderPosition(mazeLengthIndex, mazeLengthIndex)[1];
+    exitPos.z = 0;
+
+    return this.rollingBall.getPosition().dst(exitPos);
   }
 
 }

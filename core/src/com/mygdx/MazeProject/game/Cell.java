@@ -64,4 +64,5 @@ public class Cell {
   public boolean[] getCellWalls() {
     return cellWalls;
   }
+
 }

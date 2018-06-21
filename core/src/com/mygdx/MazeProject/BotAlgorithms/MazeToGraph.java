@@ -1,4 +1,4 @@
-package com.mygdx.MazeProject.SolverAlg;
+package com.mygdx.MazeProject.BotAlgorithms;
 
 public class MazeToGraph {
 

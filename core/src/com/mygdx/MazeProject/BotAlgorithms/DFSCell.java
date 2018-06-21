@@ -1,4 +1,6 @@
-public class DFSCell extends Cell{
+package com.mygdx.MazeProject.BotAlgorithms;
+
+/*public class DFSCell extends Cell {
   private DFSCell parent;
 
   public void setParent(DFSCell parent) {
@@ -19,4 +21,5 @@ public class DFSCell extends Cell{
   public Cell convertToCell() {
     return new Cell(y, x);
   }
-}
+}*/
+

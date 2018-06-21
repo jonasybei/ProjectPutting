@@ -1,10 +1,10 @@
-package com.mygdx.MazeProject.SolverAlg;
+package com.mygdx.MazeProject.BotAlgorithms;
 
 import com.mygdx.MazeProject.game.Cell;
 
 import java.util.ArrayList;
 
-public class WallFollower {
+public class WallFollower implements MazeSolver {
 
   private Cell[][] maze;
   private int mazeLength;
@@ -21,57 +21,52 @@ public class WallFollower {
     this.exit = this.maze[this.mazeLength - 1][this.mazeLength - 1];
     this.entry = this.maze[0][0];
     this.currentCell = this.entry;
-    this.direction = 1;
+    this.direction = 2;
+
   }
 
   public void createPath() {
 
-    while (this.currentCell != this.exit) {
 
+    while (this.currentCell != this.exit) {
 
       this.sequenceToExit.add(currentCell);
       int curreentY = this.currentCell.getCellPos()[0];
       int currentX = this.currentCell.getCellPos()[1];
+
+      System.out.println("currentCell pos = " + curreentY + " " + currentX);
+
       boolean[] currentCellWalls = getOganizedWalls(this.maze[curreentY][currentX].getCellWalls());
 
-
-      int counter = 0;
-      for (boolean wall : currentCellWalls) {
-        System.out.println(counter + " = " + wall);
-        counter++;
-      }
+      System.out.print(" top = " + currentCellWalls[0]);
+      System.out.print(" bottom = " + currentCellWalls[1]);
+      System.out.print(" left = " + currentCellWalls[2]);
+      System.out.println(" right = " + currentCellWalls[3]);
 
 
-      int nextY;
-      int nextX;
-
-      if (currentCellWalls[2] && currentCellWalls[1] && !currentCellWalls[3]) {
-        System.out.println("hey");
+      if (currentCellWalls[2] && currentCellWalls[1] && !currentCellWalls[3]) { // left = true  , bottom = true , right = false
+        System.out.println("turn right");
         turnDirrection("right");
         this.currentCell = getCellByDirection();
 
-      } else if (currentCellWalls[2] && !currentCellWalls[1]) {
-
+      } else if (currentCellWalls[2] && !currentCellWalls[1]) { // left = true , bottom = false
+        System.out.println("go straight");
         this.currentCell = getCellByDirection();
 
 
-      } else if (currentCellWalls[1] && currentCellWalls[2] && currentCellWalls[3]) {
-
+      } else if (currentCellWalls[1] && currentCellWalls[2] && currentCellWalls[3]) { // bottom = true , left = true , right = true
+        System.out.println("go back");
         turnDirrection("back");
         this.currentCell = getCellByDirection();
 
 
-      } else if (currentCellWalls[1] && currentCellWalls[3] && !currentCellWalls[2]) {
-        turnDirrection("left");
-        this.currentCell = getCellByDirection();
-
-
-      } else if (currentCellWalls[3] && !currentCellWalls[2]) {
-
+      } else if (!currentCellWalls[2]) {
+        System.out.println("turn left");
         turnDirrection("left");
         this.currentCell = getCellByDirection();
 
       }
+
     }
   }
 
@@ -91,19 +86,19 @@ public class WallFollower {
 
     } else if (this.direction == 3) {
 
-      orgWalls[0] = walls[2];
-      orgWalls[1] = walls[3];
-      orgWalls[2] = walls[1];
-      orgWalls[3] = walls[0];
+      orgWalls[0] = walls[3];
+      orgWalls[1] = walls[2];
+      orgWalls[2] = walls[0];
+      orgWalls[3] = walls[1];
 
       return orgWalls;
 
     } else if (this.direction == 1) {
 
-      orgWalls[0] = walls[3];
-      orgWalls[1] = walls[2];
-      orgWalls[2] = walls[0];
-      orgWalls[3] = walls[1];
+      orgWalls[0] = walls[2];
+      orgWalls[1] = walls[3];
+      orgWalls[2] = walls[1];
+      orgWalls[3] = walls[0];
 
       return orgWalls;
 
@@ -175,7 +170,30 @@ public class WallFollower {
 
   public ArrayList<Cell> getSequenceToExit() {
     createPath();
+    deleteDoubles();
     return this.sequenceToExit;
+  }
+
+  public void deleteDoubles() {
+
+    ArrayList<Cell> realSequence = new ArrayList<Cell>();
+
+    for (int i = 0; i < this.sequenceToExit.size(); i++) {
+
+      Cell currentCell = this.sequenceToExit.get(i);
+      realSequence.add(currentCell);
+
+      for (int j = 0; j < this.sequenceToExit.size(); j++) {
+
+        Cell currentCell2 = this.sequenceToExit.get(j);
+        if (currentCell.equals(currentCell2)) {
+          i = j + 1;
+        }
+      }
+    }
+
+    this.sequenceToExit = realSequence;
+
   }
 
 
