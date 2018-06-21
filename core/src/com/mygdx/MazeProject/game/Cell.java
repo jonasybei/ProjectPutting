@@ -30,6 +30,10 @@ public class Cell {
     this.visited = true;
   }
 
+  public void unVisit() {
+    this.visited = false;
+  }
+
   public boolean isVisited() {
     return visited;
   }
