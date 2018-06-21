@@ -29,10 +29,6 @@ public class Cell {
     return visited;
   }
 
-  public void unVisit() {
-    this.visited = false;
-  }
-
   public int[] getCellPos() {
     return this.cellIPos;
   }
