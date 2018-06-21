@@ -7,6 +7,7 @@ public class Cell {
   private boolean visited;
   private int[] cellIPos; // y (row) and x (colum)
   private boolean[] cellWalls; // 0 = topWall , 1 = bottomWall , 2 = leftWall , 3 = rigthWall
+  private Cell parent; //Only used for BFS
 
   public Cell(int y, int x) {
     this.visited = false;
@@ -20,6 +21,10 @@ public class Cell {
     this.cellIPos[1] = x;
   }
 
+
+  public Cell getParent() {return parent; }
+
+  public void setParent(Cell parent) {this.parent = parent; }
 
   public void visit() {
     this.visited = true;
