@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 //implements MazeSolver
-public class BFS implements MazeSolver{
+public class BFS {
 
   private ArrayList<Cell> currentCells;
 

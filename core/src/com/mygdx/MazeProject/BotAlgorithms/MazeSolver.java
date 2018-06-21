@@ -6,5 +6,5 @@ import java.util.ArrayList;
 
 public interface MazeSolver {
 
-  public ArrayList<Cell> getSequenceToExit(Cell[][] maze);
+  public ArrayList<Cell> getSequenceToExit();
 }
