@@ -7,8 +7,6 @@ import java.util.ArrayList;
 //implements MazeSolver
 public class BFS {
 
-  private ArrayList<Cell> currentCells;
-
   public ArrayList<Cell> exitToArray(Cell exit) {
     ArrayList<Cell> result = new ArrayList<Cell>();
     Cell currentCell = exit;
@@ -22,8 +20,16 @@ public class BFS {
   }
 
   public Cell solveMaze(Cell[][] maze) {
+
+      for(int i = 0; i < maze.length; i++){
+          for(int j = 0; j < maze[i].length; j++) {
+              maze[i][j].unVisit();
+          }
+      }
+
+    ArrayList<Cell> currentCells = new ArrayList<Cell>();
     currentCells.add(maze[0][0]);
-    currentCells.get(0).visit();
+    maze[0][0].visit();
 
     boolean done = false;
     int[] endPos = {maze.length - 1, maze.length - 1};
@@ -32,11 +38,10 @@ public class BFS {
         //check if goal is in currentCells
         for(int i = 0; i < currentCells.size(); i++) {
             int[] cellPos = currentCells.get(i).getCellPos();
-            if(cellPos == endPos) {
+            if (cellPos[0] == endPos[0] && cellPos[1] == endPos[1]) {
                 return currentCells.get(i);
             }
         }
-
         int cellAmount = currentCells.size();
 
         for(int i = 0; i < cellAmount; i++) {
@@ -68,17 +73,13 @@ public class BFS {
                 currentCells.add(maze[currentCellPosition[0]][currentCellPosition[1] + 1]);
                 currentCells.get(currentCells.size() - 1).setParent(currentCell);
             }
+            currentCells.remove(0);
         }
     }
     return null;
   }
 
   public ArrayList<Cell> getSequenceToExit(Cell[][] maze) {
-      for(int i = 0; i < maze.length; i++){
-          for(int j = 0; i < maze[i].length; j++) {
-              maze[i][j].unVisit();
-          }
-      }
       return exitToArray(solveMaze(maze));
     }
   }
