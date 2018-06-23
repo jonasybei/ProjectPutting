@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.CrazyPutting.game.*;
 import com.mygdx.CrazyPutting.managers.ScreenManager;
+import com.mygdx.MazeProject.BotAlgorithms.MazeBot;
 import com.mygdx.MazeProject.Models3D.TransformMazeToModel3D;
 import com.mygdx.MazeProject.Models3D.WallSpot;
 import com.mygdx.MazeProject.game.Cell;
@@ -31,8 +32,7 @@ import com.mygdx.MazeProject.game.MazeGeneratorABalg;
 
 import java.util.ArrayList;
 
-public class GameScreenMaze extends InputAdapter implements Screen {
-
+public class GameScreenMazeAuto extends InputAdapter implements Screen {
   ScreenManager manager;
   ShapeRenderer renderer;
   ExtendViewport viewport;
@@ -66,7 +66,7 @@ public class GameScreenMaze extends InputAdapter implements Screen {
   private Texture powerBar;
   private float power = 1;
 
-  private float angle = 360;
+  private float angle = 0;
 
   private int level;
 
@@ -85,8 +85,9 @@ public class GameScreenMaze extends InputAdapter implements Screen {
   private MazeGeneratorABalg mazeGen;
   private Cell[][] maze;
 
+  private MazeBot bot;
 
-  public GameScreenMaze(ScreenManager manager, int length) {
+  public GameScreenMazeAuto(ScreenManager manager, int length) {
     this.score = 0;
     this.manager = manager;
     this.powerBar = new Texture("core/assets/CrazyPutting/pwerBar.9.png");
@@ -98,6 +99,9 @@ public class GameScreenMaze extends InputAdapter implements Screen {
     this.walls = tmm.getWalls();
     this.wallSpots = tmm.getWallsSpots();
     createLevel(level);
+
+    this.bot = new MazeBot(this.maze, 1, this.wallSpots);
+
   }
 
   @Override
@@ -187,32 +191,6 @@ public class GameScreenMaze extends InputAdapter implements Screen {
     this.batch.begin();
 
     this.batch.draw(this.powerBar, Gdx.graphics.getWidth() - 100, 0, 100, Gdx.graphics.getHeight() * this.power);
-
-    if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-      if (this.power <= 0.99f) {
-        this.power = this.power + 0.01f;
-
-      }
-    } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-      if (this.power >= 0.01f) {
-        this.power = this.power - 0.01f;
-
-      }
-    }
-
-
-    if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-      if (this.angle >= 1) {
-        this.angle = this.angle - 5;
-
-      }
-    } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-      if (this.angle < 360) {
-        this.angle = this.angle + 5;
-
-      }
-    }
-
     this.batch.end();
 
     if (Gdx.input.isKeyPressed(Input.Keys.P)) {
@@ -220,14 +198,15 @@ public class GameScreenMaze extends InputAdapter implements Screen {
     }
 
     if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && this.state == 0) {
-      float shootingPower = this.power * 20;
-      float proveAngle = getRightAngle(this.angle);
-      System.out.println(proveAngle);
-      System.out.println(shootingPower);
-      rollingBall.setVelocity(shootingPower, fromDegreeToRadians(proveAngle));
+
+      Vector2 ballPos = new Vector2();
+      ballPos.x = this.rollingBall.getPosition().x;
+      ballPos.y = this.rollingBall.getPosition().y;
+
+      int[] shotingInfo = this.bot.getShot(ballPos);
+      rollingBall.setVelocity(shotingInfo[1], fromDegreeToRadians(shotingInfo[0]));
       this.state = 1;
       this.score++;
-
 
     }
 
@@ -496,8 +475,8 @@ public class GameScreenMaze extends InputAdapter implements Screen {
 
 
         if (rollingBallPos.x > leftBound && rollingBallPos.x < rightBound && rollingBallPos.y > downBound && rollingBallPos.y < upBound) {
-          System.out.printf("ball is in wall");
-          System.out.println(direction);
+          //System.out.printf("ball is in wall");
+          //System.out.println(direction);
           this.directionOfHittenWall = direction;
           return true;
         }
@@ -511,8 +490,8 @@ public class GameScreenMaze extends InputAdapter implements Screen {
 
 
         if (rollingBallPos.x > leftBound && rollingBallPos.x < rightBound && rollingBallPos.y > downBound && rollingBallPos.y < upBound) {
-          System.out.printf("ball is in wall");
-          System.out.println(direction);
+          //System.out.printf("ball is in wall");
+          //System.out.println(direction);
           this.directionOfHittenWall = direction;
           return true;
         }
@@ -545,5 +524,3 @@ public class GameScreenMaze extends InputAdapter implements Screen {
   }
 
 }
-
-

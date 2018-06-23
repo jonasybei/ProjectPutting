@@ -4,7 +4,7 @@ package com.mygdx.CrazyPutting.managers;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.CrazyPutting.game.*;
-import com.mygdx.MazeProject.Screens.GameScreenMaze;
+import com.mygdx.MazeProject.Screens.GameScreenMazeAuto;
 import com.mygdx.MazeProject.Screens.MazeLengthScreen;
 
 public class ScreenManager extends Game {
@@ -73,7 +73,7 @@ public class ScreenManager extends Game {
   }
 
   public void showGameScreenMaze(int length) {
-    setScreen(new GameScreenMaze(this, length));
+    setScreen(new GameScreenMazeAuto(this, length));
   }
 
   public void showMazeLengthScreen() {
