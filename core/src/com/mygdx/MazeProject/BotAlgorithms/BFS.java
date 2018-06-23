@@ -5,7 +5,13 @@ import java.util.ArrayList;
 
 
 //implements MazeSolver
-public class BFS {
+public class BFS implements MazeSolver{
+
+    public Cell[][] maze;
+
+    public BFS(Cell[][] maze) {
+        this.maze = maze;
+    }
 
   public ArrayList<Cell> exitToArray(Cell exit) {
     ArrayList<Cell> result = new ArrayList<Cell>();
@@ -19,7 +25,7 @@ public class BFS {
     return result;
   }
 
-  public Cell solveMaze(Cell[][] maze) {
+  public Cell solveMaze() {
 
       for(int i = 0; i < maze.length; i++){
           for(int j = 0; j < maze[i].length; j++) {
@@ -79,7 +85,7 @@ public class BFS {
     return null;
   }
 
-  public ArrayList<Cell> getSequenceToExit(Cell[][] maze) {
-      return exitToArray(solveMaze(maze));
+  public ArrayList<Cell> getSequenceToExit() {
+      return exitToArray(solveMaze());
     }
   }
