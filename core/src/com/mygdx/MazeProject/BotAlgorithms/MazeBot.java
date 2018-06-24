@@ -3,8 +3,8 @@ package com.mygdx.MazeProject.BotAlgorithms;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.MazeProject.Models3D.WallSpot;
 import com.mygdx.MazeProject.game.Cell;
-
 import java.util.ArrayList;
+import java.lang.Math;
 
 public class MazeBot {
 
@@ -93,10 +93,10 @@ public class MazeBot {
     return angle;
   }
 
-  public int computePower(float distence) {
-
-    return 0;
-
+  public int computePower(float distance) {
+    double acc = 0.5 * 9.81;
+    double result = -acc * Math.sqrt((-2 * distance)/acc);
+    return (int)result;
   }
 
   public float[] getRenderPosition(int y, int x) {
