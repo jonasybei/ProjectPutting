@@ -94,8 +94,8 @@ public class MazeBot {
   }
 
   public int computeAngle2(Vector2 start, Vector2 goal) {
-    Vector2 vector = new Vector2(goal.x - start.x, goal.y - goal.y);
-    return (int) (360 - Math.atan(vector.y/ vector.x));
+    Vector2 vector = new Vector2(goal.x - start.x, start.y - goal.y);
+    return (int)(360 - Math.atan(vector.y/ vector.x));
   }
 
   public int computePower(float distance) {
