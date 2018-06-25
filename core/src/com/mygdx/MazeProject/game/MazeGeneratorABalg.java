@@ -9,7 +9,7 @@ public class MazeGeneratorABalg {
   //http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm
   private Cell[][] maze;
   private int visitedCellsNum;
-  private Cell currentCell; // 0 = y (row) , 1 = x (colum)
+  private Cell currentCell; // 0 = y (row) , 1 = x (column)
   private Stack<Cell> visitedCells;
 
 

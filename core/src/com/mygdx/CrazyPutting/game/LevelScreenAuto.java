@@ -66,7 +66,7 @@ public class LevelScreenAuto extends InputAdapter implements Screen {
   @Override
   public void show() {
     this.stage = new Stage();
-    this.atlas = new TextureAtlas("core/assets/CrazyPutting/CrazyPutting/button.pack");
+    this.atlas = new TextureAtlas("core/assets/CrazyPutting/button.pack");
     this.skin = new Skin(atlas);
     this.table = new Table(skin);
     this.font = new BitmapFont();

@@ -94,7 +94,7 @@ public class StartMenu extends InputAdapter implements Screen {
       @Override
       public void clicked(InputEvent event, float x, float y) {
         try {
-          Desktop.getDesktop().open(new File("C:\\Users\\Matteo\\University Maastricht\\PROJECTS\\Project.Putting\\core\\src\\com\\mygdx\\CrazyPutting\\WriterAndReader\\ScoreInfo.txtt"));
+          Desktop.getDesktop().open(new File("core/assets/CrazyPutting/ScoreInfo.txt"));
           System.out.println("Textfile was not found.");
         } catch (IOException e) {
           System.out.println("file not found");

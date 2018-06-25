@@ -28,6 +28,7 @@ import com.mygdx.CrazyPutting.WriterAndReader.Writer;
 import com.mygdx.CrazyPutting.managers.ScreenManager;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameScreenAuto extends InputAdapter implements Screen {
 
@@ -298,6 +299,29 @@ public class GameScreenAuto extends InputAdapter implements Screen {
     this.stage.draw();
 
 
+  }
+
+  public float powerError(float power) {
+    if(power < 0.3) {
+      return power + randFloat(0, 2);
+    } else if(power < 0.5) {
+      return power + randFloat(0, 5);
+    } else if(power < 0.8) {
+      return power + randFloat(5, 10);
+    } else {
+      return power + randFloat(10, 15);
+    }
+  }
+
+  public float randFloat(float min, float max) {
+    Random rand = new Random();
+    float result = rand.nextFloat() * (max - min) + min;
+    result = result/100;
+    if(rand.nextBoolean()) {
+      return result;
+    } else {
+      return -result;
+    }
   }
 
 
