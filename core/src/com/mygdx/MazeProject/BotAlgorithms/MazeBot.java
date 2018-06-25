@@ -40,7 +40,7 @@ public class MazeBot {
           int secondX = sequenceToExit.get(i + 1).getCellPos()[1];
           int thirdX = sequenceToExit.get(i + 2).getCellPos()[1];
           if((firstY == secondY && firstY == thirdY) || (firstX == secondX && firstX == thirdX)) {
-            sequenceToExit.remove(1);
+            sequenceToExit.remove(i + 1);
             i--;
           }
       }
