@@ -25,7 +25,6 @@ public class MazeBot {
         break;
       case 2:
         this.solver = new BFS(this.maze);
-        ;
         break;
     }
 
@@ -92,6 +91,11 @@ public class MazeBot {
     int angle = (int) (Math.acos(cosAngle) * (180 / Math.PI));
 
     return angle;
+  }
+
+  public int computeAngle2(Vector2 start, Vector2 goal) {
+    Vector2 vector = new Vector2(goal.x - start.x, goal.y - goal.y);
+    return (int) (360 - Math.atan(vector.y/ vector.x));
   }
 
   public int computePower(float distance) {
