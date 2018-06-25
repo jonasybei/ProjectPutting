@@ -170,11 +170,11 @@ public class WallFollower implements MazeSolver {
 
   public ArrayList<Cell> getSequenceToExit() {
     createPath();
-    //deleteDoubles();
+    deleteDoubles();
     return this.sequenceToExit;
   }
 
-  public void deleteDoubles() {  // to fix
+  public void deleteDoubles() {
 
     ArrayList<Cell> realSequence = new ArrayList<Cell>();
 

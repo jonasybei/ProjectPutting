@@ -3,22 +3,21 @@ package com.mygdx.MazeProject.BotAlgorithms;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.MazeProject.Models3D.WallSpot;
 import com.mygdx.MazeProject.game.Cell;
-
 import java.util.ArrayList;
+import java.lang.Math;
 
 public class MazeBot {
 
   private Cell[][] maze;
   private MazeSolver solver;
   private ArrayList<Cell> sequenceToExit;
+  private ShotSimulation simulator;
   private int currentIndex;
-  private GreedyAlg greedy;
-
 
   public MazeBot(Cell[][] maze, int alg, ArrayList<WallSpot> wallSpots) {
     this.maze = maze;
+    this.simulator = new ShotSimulation(wallSpots);
     this.currentIndex = 0;
-    this.greedy = new GreedyAlg(wallSpots);
 
     switch (alg) {
       case 1:
@@ -41,7 +40,7 @@ public class MazeBot {
           int secondX = sequenceToExit.get(i + 1).getCellPos()[1];
           int thirdX = sequenceToExit.get(i + 2).getCellPos()[1];
           if((firstY == secondY && firstY == thirdY) || (firstX == secondX && firstX == thirdX)) {
-            sequenceToExit.remove(1);
+            sequenceToExit.remove(i + 1);
             i--;
           }
       }
@@ -49,20 +48,25 @@ public class MazeBot {
 
   public int[] getShot(Vector2 ballPos) { // index 0 = angle , index 1 = power
 
+    int[] nextShot = new int[2];
+
     Cell cellToReach = this.sequenceToExit.get(currentIndex);
     this.currentIndex++;
-
 
     Vector2 cellToReachPos = new Vector2();
     cellToReachPos.y = getRenderPosition(cellToReach.getCellPos()[0], cellToReach.getCellPos()[1])[0];
     cellToReachPos.y = getRenderPosition(cellToReach.getCellPos()[0], cellToReach.getCellPos()[1])[1];
 
-    int[] nextShot = this.greedy.getNextShot(ballPos, cellToReachPos);
+    int angle = computeAngle(ballPos, cellToReachPos);
+    int power = computePower(ballPos.dst(cellToReachPos));
+
+    nextShot[0] = angle;
+    nextShot[1] = power;
+
     return nextShot;
 
   }
 
-<<<<<<< HEAD
 
   public int computeAngle(Vector2 start, Vector2 goal) {
 
@@ -100,8 +104,6 @@ public class MazeBot {
     return (int)result;
   }
 
-=======
->>>>>>> e0fa420345fe83cb0416c46c9cb911b1b0a2dcd5
   public float[] getRenderPosition(int y, int x) {
 
     float distanceToCenter = this.maze.length / 2;
@@ -109,8 +111,6 @@ public class MazeBot {
 
     renderPos[0] = (y - distanceToCenter) * 2;
     renderPos[1] = (x - distanceToCenter) * 2;
-
-    System.out.println("render cell position = " + renderPos[0] + " " + renderPos[1]);
 
     return renderPos;
   }

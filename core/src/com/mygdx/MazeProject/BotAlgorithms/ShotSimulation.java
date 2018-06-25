@@ -99,8 +99,8 @@ public class ShotSimulation {
 
 
         if (rollingBallPos.x > leftBound && rollingBallPos.x < rightBound && rollingBallPos.y > downBound && rollingBallPos.y < upBound) {
-          //System.out.printf("ball is in wall");
-          //System.out.println(direction);
+          System.out.printf("ball is in wall");
+          System.out.println(direction);
           this.directionOfHittenWall = direction;
           return true;
         }
@@ -114,8 +114,8 @@ public class ShotSimulation {
 
 
         if (rollingBallPos.x > leftBound && rollingBallPos.x < rightBound && rollingBallPos.y > downBound && rollingBallPos.y < upBound) {
-          //System.out.printf("ball is in wall");
-          //System.out.println(direction);
+          System.out.printf("ball is in wall");
+          System.out.println(direction);
           this.directionOfHittenWall = direction;
           return true;
         }

@@ -85,7 +85,6 @@ public class GameScreenMaze extends InputAdapter implements Screen {
   private MazeGeneratorABalg mazeGen;
   private Cell[][] maze;
 
-
   public GameScreenMaze(ScreenManager manager, int length) {
     this.score = 0;
     this.manager = manager;
@@ -98,6 +97,7 @@ public class GameScreenMaze extends InputAdapter implements Screen {
     this.walls = tmm.getWalls();
     this.wallSpots = tmm.getWallsSpots();
     createLevel(level);
+
   }
 
   @Override
