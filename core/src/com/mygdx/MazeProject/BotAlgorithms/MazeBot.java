@@ -24,6 +24,7 @@ public class MazeBot {
         this.solver = new WallFollower(this.maze);
         break;
       case 2:
+        this.solver = new BFS(this.maze);
         ;
         break;
     }
